@@ -22,7 +22,7 @@ then
         exit 1
 fi
 
-echo ----------------------------------------------------------------
+#echo ----------------------------------------------------------------
 
 logRecord="$1"
 #echo "Parsing: $1"
@@ -39,37 +39,30 @@ while read -r -a words; do                # iterate over lines of input
 done <<<"$logRecord"
 
 protocol="${vars[PROTO]}"
-echo "protocol: $protocol"
+#echo "protocol: $protocol"
 
 destPort="${vars[DPT]}"
-echo "destPort: $destPort"
+#echo "destPort: $destPort"
 
 #
 #  Note: relies on the nmap services file.  Either install nmap or download nmap-services from somewhere
 #
 destSvc=$(grep -i "\s${destPort}/${proto}" /etc/services | cut -f 1)
 if [ -z "$destSvr" ]; then
-        destSvc="unknown svc type"
+        destSvc="unknown"
 fi
-echo "destSvc: $destSvc"
+#echo "destSvc: $destSvc"
 
 srcAddr="${vars[SRC]}"
-echo "srcAddr: $srcAddr"
+#echo "srcAddr: $srcAddr"
 
 srcHostname=`dig +short -x $srcAddr`
 if [ -z "$srcHostname" ]; then
-        srcHostname="no reverse DNS found"
+        srcHostname="<none>"
 fi
-echo "srcHostname: $srcHostname"
+#echo "srcHostname: $srcHostname"
 
-printf "\n"
+#printf "\n"
 
-
-
-
-
-
-
-
-
-
+#echo prot:$protocol,port:$destPort,svc:$destSvc,src:$srcAddr,fqdn:$srcHostname
+echo $protocol,$srcHostname,$srcAddr,$destPort,$destSvc
