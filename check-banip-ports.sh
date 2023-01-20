@@ -38,6 +38,8 @@ while read -r -a words; do                # iterate over lines of input
   done
 done <<<"$logRecord"
 
+#printf "logRecord -> %s\n"  "$logRecord"
+
 protocol="${vars[PROTO]}"
 #echo "protocol: $protocol"
 
@@ -62,7 +64,6 @@ if [ -z "$srcHostname" ]; then
 fi
 #echo "srcHostname: $srcHostname"
 
-#printf "\n"
 
-#echo prot:$protocol,port:$destPort,svc:$destSvc,src:$srcAddr,fqdn:$srcHostname
-echo $protocol,$srcHostname,$srcAddr,$destPort,$destSvc
+printf "%s, %s, %s, %s, %s, \"%s\"\n"  $protocol $srcHostname $srcAddr $destPort $destSvc """$logRecord"""
+
