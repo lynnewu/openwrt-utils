@@ -12,7 +12,7 @@
 #    nmap - v7.7 (at least, but it only uses the port/services definitions file, so the version might not matter at all)
 #
 
-#
+#  Usage:  (see ban-check.sh for a script ready to go)
 # tail -f /var/log/messages | grep -i banip | xargs -L1 -I {} ./check-banip-ports.sh {}
 #
 
