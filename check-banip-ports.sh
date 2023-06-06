@@ -12,7 +12,7 @@
 #    nmap - v7.7 (at least, but it only uses the port/services definitions file, so the version might not matter at all)
 #
 
-#  Usage:  (see ban-check.sh for a script ready to go)
+#
 # tail -f /var/log/messages | grep -i banip | xargs -L1 -I {} ./check-banip-ports.sh {}
 #
 
@@ -63,13 +63,17 @@ dt=${vars[DATE]}
 #echo "date: $dt"
 tm=${vars[TIME]}
 #echo "time: $tm"
+
 timestamp="${dt} ${tm}"
 #echo "datetime: $timestamp"
+
 
 protocol=${vars[PROTO]}
 #echo "protocol: $protocol"
 
 destPort="${vars[DPT]}"
+#echo "destPort: $destPort"
+
 #
 #  Note: relies on the nmap services file.  Either install nmap or download nmap-services from somewhere
 #
@@ -88,10 +92,13 @@ srcHostname=`dig +short -x $srcAddr | tail -1 `
 srcHostname="${srcHostname%.}"
 #echo "SrcHost: ${srcHostname%.}"
 
+
 if [ -z "$srcHostname" ]; then
-        srcHostname="no_reverse_DNS"
+        srcHostname="<no PTR record>"
 fi
 #echo "srcHostname: $srcHostname"
+
+
 
 #outFormat="%-8s%-18s%-60s%-16s %-4s\n"
 #outFormat="%-8s,%-18s,%-60s,%-16s,%-4s\n"
@@ -106,4 +113,4 @@ fi
 outFormat="%s %s\t%s\t%s\t%s\t%s\n"
 #  CSV
 outFormat='"%s %s","%s","%s","%s","%s"\n'
-printf "$outFormat" $timestamp $destPort $srcHostname $srcAddr $protocol
+printf "$outFormat" $timestamp $destPort "$srcHostname" $srcAddr $protocol
